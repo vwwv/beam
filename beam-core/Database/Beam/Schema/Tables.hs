@@ -418,7 +418,8 @@ type family Columnar (f :: * -> *) x where
     Columnar (Lenses t f) x = LensFor (t f) (Columnar f x)
 --    Columnar (Lenses t f) x = LensFor (t f) (f x)
 
-    Columnar (Nullable c) x = Columnar c (Maybe x)
+    Columnar (Nullable (Nullable c)) x = Columnar (Nullable c) x
+    Columnar (Nullable c) x            = Columnar c (Maybe x)
 
     Columnar f x = f x
 
